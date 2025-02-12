@@ -2,6 +2,6 @@
     <div class="main">
         <Alert />
         <Profile />
-        <div>index page</div>
+        <div>Main page</div>
     </div>
 </template>
