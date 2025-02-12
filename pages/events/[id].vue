@@ -1,6 +1,6 @@
 <script setup>
 const nuxt = useNuxtApp();
-console.log("nuxt : ", nuxt);
+// console.log("nuxt : ", nuxt);
 </script>
 
 <template>
