@@ -1,5 +1,26 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
 export default defineNuxtConfig({
-  compatibilityDate: '2024-11-01',
-  devtools: { enabled: true }
+  app: {
+    head: {
+      title: 'My application',
+      titleTemplate: '%s | by Jom'
+    }
+  },
+  compatibilityDate: '2025-02-12',
+  devtools: { enabled: true },
+  $development: {
+    app: {
+      head: {
+        title: 'DEV',
+      }
+    },    
+  },
+  $production: {
+    app: {
+      head: {
+        title: 'PRD',
+      }
+    }, 
+  }
 })
