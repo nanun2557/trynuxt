@@ -4,7 +4,8 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
   alias: {
-    "@": resolve(__dirname,"/"),
+    // "@": resolve(__dirname,"/"),
+    assets: "/<rootDir>/assets"
   },
   css: ["~/assets/css/main.css"],
   vite: {
