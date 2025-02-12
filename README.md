@@ -2,12 +2,19 @@
 
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
+## install
+```
+download node from https://nodejs.org/en/download
+and then install it
+```
+
 ## Setup
 
 Make sure to install dependencies:
+download dependencies base on  file : package-lock 
 
 ```bash
-# npm
+# npm 
 npm install
 
 # pnpm
