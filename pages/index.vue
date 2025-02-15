@@ -1,7 +1,11 @@
-<script setup>
+<script setup lang="ts">
     const {sayHello} = useUtils();
     sayHello();
+    definePageMeta({
+        middleware : 'auth'
+    })
 </script>
+
 
 <template>
     <div class="main">
