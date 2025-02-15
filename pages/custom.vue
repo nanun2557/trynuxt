@@ -2,6 +2,9 @@
 definePageMeta({
     layout: "custom",
 })
+console.log(useNuxtApp());
+const { $sayHello } = useNuxtApp();
+$sayHello("Jom");
 </script>
 
 <template>
