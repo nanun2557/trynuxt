@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     assets: "/<rootDir>/assets"
   },
   css: ["~/assets/css/main.css"],
+  ssr: false,
   modules: [
     '@pinia/nuxt',
   ],
