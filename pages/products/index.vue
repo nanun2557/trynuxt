@@ -1,8 +1,10 @@
 <script setup>
 import { toRaw } from 'vue';
 
-const  {data:products} = await useFetch('/api/products');
-console.log("product : ", toRaw(products.value))
+const  {data:products} = await useFetch('/api/products',{
+  transform:(_products) => _products.data.products,
+});
+console.log("product : ", toRaw(products))
 </script>
 
 
@@ -17,7 +19,7 @@ console.log("product : ", toRaw(products.value))
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(product, index) in products.data.products" :key="index" class="hover:bg-gray-50">
+          <tr v-for="(product, index) in products" :key="index" class="hover:bg-gray-50">
             <td class="border px-4 py-2">{{ product.name }}</td>
             <td class="border px-4 py-2">{{ product.price }} ฿</td>
           </tr>
