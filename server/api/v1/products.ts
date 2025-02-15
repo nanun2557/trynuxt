@@ -5,3 +5,4 @@ export default defineEventHandler((event)=>{
         data,
     };
 });
+
