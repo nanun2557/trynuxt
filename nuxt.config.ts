@@ -1,5 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import {resolve} from "path"
+// import {resolve} from "path"
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
@@ -8,6 +8,9 @@ export default defineNuxtConfig({
     assets: "/<rootDir>/assets"
   },
   css: ["~/assets/css/main.css"],
+  modules: [
+    '@pinia/nuxt',
+  ],
   vite: {
     plugins: [
       tailwindcss(),
