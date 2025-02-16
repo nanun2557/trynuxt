@@ -14,10 +14,31 @@ Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduct
 ## QA
 1. useFetch , useLazyFetch แตกต่างกันอย่างไร ?
     - useLazyFetch หรือ useFetch ใน Nuxt เป็น async function
+      (async function หมายถึง ทำทันทีต่อแต่ไม่รอผลลัพธ์จนเสร็จ)
     - useFetch() ใช้สำหรับดึงข้อมูลอัตโนมัติทันที เช่นทำงานทักทีที่เข้า page
     - useLazyFetch() ใช้โหลดข้อมูลเมื่อเรียกใช้งาน เช่นทำงานตอน user กดปุ่ม
     - useLazyFetch, useFetch ค่าที่ได้เป็น reactive (reactive หมายความว่า เมื่อค่าของตัวแปรเปลี่ยน UI จะอัปเดตเองโดยอัตโนมัติ )
       จึงไม่จำเป็นต้องใช้ await
-    - ถ้าใช้ await จะบล็อกจนกว่าข้อมูลจะถูกดึงมาเรียบร้อย (ไม่ดีถ้าต้องการโหลดแบบ Async)
+    - ถ้าใช้ await จะบล็อกจนกว่าข้อมูลจะถูกดึงมาเรียบร้อย (ไม่ดี ถ้าต้องการโหลดแบบ Async)
+      สมมุติ ถ้าใช้ await กับ useFetch() สำหรับดึงข้อมูลจาก API , โปรแกรมจะรอจนกว่าได้ข้อมูลจาก API ถึงจะ render UI
+
+    ### ตัวอย่าง useLazyFetch()
+    ```
+    const { data: productsV2, pending } = useLazyFetch('/api/v2/products', {
+    transform: (response) => {
+        console.log('Transforming response:', response);
+        return response.products; // แปลงข้อมูลที่ได้จาก API
+    },
+    });
+    ```
+    ### ตัวอย่าง useLazyFetch()
+    ```
+    const { data: productsV2, pending } = useLazyFetch('/api/v2/products', {
+    transform: (response) => {
+        console.log('Transforming response:', response);
+        return response.products; // แปลงข้อมูลที่ได้จาก API
+    },
+    });
+    ```
 
 2. composables folder ไว้ทำอะไร ?
