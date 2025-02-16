@@ -20,6 +20,17 @@ const { data: productsV2, pending } = useLazyFetch('/api/v2/products', {
 // ลอง log ค่า pending และ productsV2
 console.log('pending:', pending);
 console.log('productsV2:', productsV2);
+
+const { data: productCount, pendingProductCount, error } = useAsyncData("fetchData", async () => {
+  const response = await fetch("/api/v2/productsCount");
+  if (!response.ok) throw new Error("โหลดข้อมูลไม่สำเร็จ");
+  return await response.json();
+});
+
+if (error.value) {
+  console.error("เกิดข้อผิดพลาด:", error.value);
+}
+
 </script>
 
 
@@ -59,5 +70,11 @@ console.log('productsV2:', productsV2);
         </tbody>
       </table>
       <p v-if="pending" class="text-center text-yellow-100 mt-4">Loading...</p>
+
+      <hr>
+      <div class="productCount">
+        <h1 class="text-xl font-bold mb-4">Product Count from /api/v2/productsCount</h1>
+        <p class="text-yellow-100">{{ pendingProductCount ? "Loading..." : productCount }}</p>
+      </div>
     </div>
   </template>

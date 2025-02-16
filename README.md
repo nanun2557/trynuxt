@@ -95,3 +95,82 @@ Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduct
         npm run build  # สร้างไฟล์ที่ .output/ (ต้องใช้ Node.js)
         npm run start  # รัน Nuxt ด้วย SSR ที่ production server
         ```    
+
+3. **Promise คืออะไร ?**  
+  - Promise เป็น object ใน JavaScript ที่ใช้สำหรับจัดการ asynchronous operations  
+  - ฟังก์ชันที่เป็น async จะ return ค่าเป็น Promise เสมอ
+  - Promise ช่วยให้การทำงานกับ callback ง่ายขึ้น และทำให้โค้ดอ่านง่ายขึ้น  
+  - Promise มี 3 สถานะ  
+    - pending (รอดำเนินการ) → Promise เริ่มต้นที่สถานะนี้ และยังไม่มีผลลัพธ์
+    - fulfilled (สำเร็จ) → Promise ทำงานเสร็จเรียบร้อย และคืนค่า (resolve)
+    - rejected (ล้มเหลว) → Promise ทำงานไม่สำเร็จ และคืนค่าข้อผิดพลาด (reject)
+  - **การสร้าง promise**    
+    ```
+    const myPromise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        let success = true; // ลองเปลี่ยนเป็น false เพื่อดู reject
+        if (success) {
+          resolve("โหลดข้อมูลสำเร็จ!"); // สำเร็จ
+        } else {
+          reject("เกิดข้อผิดพลาดในการโหลดข้อมูล!"); // ล้มเหลว
+        }
+      }, 2000); // จำลองการโหลดข้อมูลใช้เวลา 2 วินาที
+    });
+    ```
+  - **ใช้งาน Promise ด้วย .then() และ .catch()**  
+    ```
+    myPromise
+      .then((result) => {
+        console.log(result); // ถ้า resolve -> แสดง "โหลดข้อมูลสำเร็จ!"
+      })
+      .catch((error) => {
+        console.log(error); // ถ้า reject -> แสดง "เกิดข้อผิดพลาดในการโหลดข้อมูล!"
+    });
+    ```
+  - **สามารถ Promise กับ async/await**  
+    await + promise จะได้ข้อมูล
+    ```
+    const getData = async () => {
+      try {
+        const data = await myPromise(); // รอให้ myPromise() ทำงานเสร็จ
+        console.log("ข้อมูลที่โหลด:", data);
+      } catch (error) {
+        console.log("เกิดข้อผิดพลาด:", error);
+      }
+    };
+    getData();
+    ```
+
+4. **useFetch() ต่่างกับ useAsyncData() อย่างไร?** 
+  - useFetch → ใช้สำหรับดึงข้อมูลที่เรียบง่าย รองรับ pending และ error อัตโนมัติ
+  - useAsyncData → ใช้เมื่อเราต้องการควบคุม logic มากขึ้น เช่น การ throw error เอง
+  **ตัวอย่าง**  
+    await + promise จะได้ข้อมูล    
+    จากตัวอย่างนี้ fetch("/api/v2/productsCount") เป็น async function ที่ return promise  
+    ```
+    const { data: productCount, pendingProductCount, error } = useAsyncData("fetchData", async () => {
+      const response = await fetch("/api/v2/productsCount");
+      if (!response.ok) throw new Error("โหลดข้อมูลไม่สำเร็จ");
+      return await response.json();
+    });
+
+    if (error.value) {
+      console.error("เกิดข้อผิดพลาด:", error.value);
+    }
+    ```
+
+5. **ทุก function ที่ return promise นั้นเรียนกว่า async function ได้เสมอไหม?**
+  - ฟังก์ชันที่ return Promise ไม่จำเป็นต้องเป็น async function
+  - แต่ฟังก์ชันที่ return Promise ถือว่าเป็น asynchronous function สามารถ await เพื่อถอด promise เป็นค่า value ได้
+  **ตัวอย่าง ฟังก์ชันที่ return Promise**  
+    ```
+    function fetchData() {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve("ข้อมูลโหลดสำเร็จ!");
+        }, 1000);
+      });
+    }
+
+    console.log(fetchData()); // Output: Promise { <pending> }
+    ```
