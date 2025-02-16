@@ -8,6 +8,7 @@ const  {data:productsV1 } = await useFetch('/api/v1/products',{
   },
 });
 
+
 // เรียกใช้ useLazyFetch
 const { data: productsV2, pending } = useLazyFetch('/api/v2/products', {
   transform: (response) => {
