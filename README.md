@@ -17,7 +17,8 @@ Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduct
       (async function หมายถึง ทำทันทีต่อแต่ไม่รอผลลัพธ์จนเสร็จ) 
       และจะทำงานทันทีเมื่อเข้า page
     - useFetch() ใช้สำหรับดึงข้อมูลอัตโนมัติทันที เช่นทำงานทักทีที่เข้า page
-    - useLazyFetch() ใช้โหลดข้อมูลเมื่อเรียกใช้งาน เช่นทำงานตอน user กดปุ่ม
+    - useLazyFetch() ใช้โหลดข้อมูลเมื่อเรียกใช้งาน เช่นทำงานตอน user กดปุ่ม  
+      ถ้าใช้ useLazyFetch แบบเรียกใช้งานโดยตรง ไม่ครอบด้วยฟังก์ชันอื่น มันจะทำงานเหมือน useFetch และ ดึงข้อมูลทันทีที่ component โหลด
     - useFetch ค่าที่ได้ ไม่เป็น reactive ข้อมูลใน UI จะไม่เปลี่ยนแปลง 
     - useLazyFetch ค่าที่ได้เป็น reactive   
       (reactive หมายความว่า เมื่อค่าของตัวแปรเปลี่ยน UI จะอัปเดตเองโดยอัตโนมัติ )
@@ -36,7 +37,9 @@ Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduct
         ```
 
         **ตัวอย่าง useFetch() + ref() เพื่อทำให้ข้อมูลที่ได้จาก reactive**  
-        สร้าง function ใหม่มาครอบ useFetch(), ซึ่ง function จะไม่ทำงานทันทีเมื่อเข้า page ต้องเรียกใช้เอง 
+        สร้าง function ใหม่มาครอบ useFetch(), ซึ่ง function จะไม่ทำงานทันทีเมื่อเข้า page ต้องเรียกใช้เอง  
+        **แต่ useFetch() จะทำงานอยู่ดี**    
+        ถ้า ไม่อยากให้ทำงานต้องใข้ useLazyFetch() แทน  
         ```
         const productsV1 = ref([]);
         const pending = ref(true);
@@ -54,7 +57,8 @@ Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduct
         fetchProductsV1();
         ```
 
-        **ตัวอย่าง useLazyFetch()**
+        **ตัวอย่าง useLazyFetch() แบบโดยตรงโดยไม่มี function มาครอบ**  
+        การทำงาน จะทำงานเหมือน useFetch()
         ```
         const { data: productsV2, pending } = useLazyFetch('/api/v2/products', {
         transform: (response) => {
