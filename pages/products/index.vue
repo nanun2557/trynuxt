@@ -1,7 +1,6 @@
 <script setup>
 
-// _products.data.products (ค่าจาก API)
-const  {data:productsV1 } = await useFetch('/api/v1/products',{
+const  {data:productsV1 } =  useFetch('/api/v1/products',{
   transform:(response) => {
     console.log('Transforming response:', response);
     return response.data.products
